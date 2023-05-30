@@ -2,6 +2,7 @@
 
 --------------------------------------------------------------------------------------------------
 VSCode commands from terminal: for Angular and node,
+
 Commands from system command prompt/terminal:
 
 node -v
