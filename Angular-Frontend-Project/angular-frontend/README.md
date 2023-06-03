@@ -44,5 +44,8 @@ Steps done in sequence:
 -> Now we generate the product service:
 --> ng generate service services/product
 
+-> Installing Bootstrap and Fontawesome using npm, which would reflect in both node_modules and package.json files
+--> ng install bootstrap@5.2.0
+--> ng install @fortawesome/fontawesome-free
 
 
