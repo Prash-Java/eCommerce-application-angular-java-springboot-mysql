@@ -6,6 +6,7 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { HttpClientModule } from '@angular/common/http';
 import { ProductService } from './services/product.service';
 import { Routes, RouterModule } from '@angular/router';
+import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
 
 const routes:Routes = [
   // Angular by default adds '/' in path like '/category' and hence we do not need to add '/' explicitly,
@@ -13,7 +14,7 @@ const routes:Routes = [
   // If first three specific paths do not matches, then we give 4th one with redirectTo but only this will start path with '/' explicitly
   // If none of 1st four matches, then generic wildcard is used in 5th case below,
   // NOTE: Being single page application, only modified part of page gets updated, and not the entire page
-  { path: 'category/:id', component: ProductListComponent },
+  { path: 'category/:id/:name', component: ProductListComponent },
   { path: 'category', component:ProductListComponent},
   { path: 'products', component:ProductListComponent},
   { path: '', redirectTo: '/products', pathMatch: 'full'},
@@ -23,7 +24,8 @@ const routes:Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    ProductListComponent
+    ProductListComponent,
+    ProductCategoryMenuComponent
   ],
   imports: [
     // We just import the above created routes here in 1st line using Router Module

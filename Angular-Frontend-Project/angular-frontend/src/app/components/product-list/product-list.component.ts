@@ -12,6 +12,7 @@ export class ProductListComponent implements OnInit {
 
   products: Product[] = [];
   currentCategoryId: number = 1;
+  currentCategoryName: string = "books";
   //  here we would integrate this component with product service using dependency injection,
   constructor(private productService: ProductService,
     private route: ActivatedRoute) { }
@@ -29,8 +30,10 @@ export class ProductListComponent implements OnInit {
     // If CategoryId is available, convert it into number using "+" operator to read that id as number, else assign it value of 1 as default
     if(hasCategoryId){
       this.currentCategoryId = +this.route.snapshot.paramMap.get('id')!;
+      this.currentCategoryName = this.route.snapshot.paramMap.get('name')!;
     } else {
       this.currentCategoryId = 1;
+      this.currentCategoryName = "Books";
     }
 
     this.productService.getProductList(this.currentCategoryId).subscribe(
