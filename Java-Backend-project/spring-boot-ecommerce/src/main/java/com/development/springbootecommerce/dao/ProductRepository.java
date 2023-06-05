@@ -17,4 +17,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     // Pageable is useful for pagination, number of pages etc
     // Spring Data REST would automatically expose the endpoint "http://localhost:8080/api/products/search/findByCategoryId?id=k" where,
     // value of k comes from user actions via Angular Product.service.ts class
+    Page<Product> findByNameContaining(@Param("name") String name, Pageable pageable);
+    // The above abstract method is similar to the following query in DB:
+    // select * from Product p where p.name like concat('%',':name','%');
+    // Spring Data REST would automatically expose the endpoint: "http://localhost:8080/api/products/search/findByNameContaining?name=python"
 }
