@@ -11,6 +11,11 @@
                         <a href="#" class="primary-btn">Add to cart</a>
                     </div>
                 </div>
+                <!-- If no products are found after filter/search-->
+                <!-- ? is SAFE NAVIGATION OPERATOR IN ANGULAR THAT HANDLES CASES OF NULL POINTER EXCEPTION-->
+                <div *ngIf="products?.length==0" class="alert alert-warning col-md-12" role="alert">
+                    No Products Found...
+                </div>
             </div>
         </div>
     </div>
