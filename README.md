@@ -31,3 +31,6 @@ git branch -M main
 git remote add origin https://github.com/Prash-Java/eCommerce-application-angular-java-springboot-mysql
 
 git push -u origin main
+
+  
+NOTE: It is best practice to install the "Angular Language Service" plugin from VS Code IDE Marketplace, this tool helps in finding compile time errors, which generally javascript do not perform,
