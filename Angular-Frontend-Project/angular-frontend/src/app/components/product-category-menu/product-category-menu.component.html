@@ -4,7 +4,7 @@
             <li *ngFor="let productCategory of productCategories">
                 <!-- routerLink is made use of, to pass categoryId param -->
                 <a routerLink="/category/{{ productCategory.id }}/{{ productCategory.categoryName }}"
-                    routerLinkActive="active-link">
+                    routerLinkActive="active-link" style="text-decoration: none; color: darkblue;" >
                     {{ productCategory.categoryName}}</a>
             </li>
         </ul>
