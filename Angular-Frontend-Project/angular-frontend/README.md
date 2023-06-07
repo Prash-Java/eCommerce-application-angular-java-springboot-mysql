@@ -48,4 +48,8 @@ Steps done in sequence:
 --> ng install bootstrap@5.2.0
 --> ng install @fortawesome/fontawesome-free
 
+-> Pagination logic we employ at backend and frontend both, required steps are:
+--> ng add @angular/localize from the CLI
+--> npm install @ng-bootstrap/ng-bootstrap@13.0.0
+
 

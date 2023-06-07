@@ -9,6 +9,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
 import { SearchComponent } from './components/search/search.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const routes:Routes = [
   // Angular by default adds '/' in path like '/category' and hence we do not need to add '/' explicitly,
@@ -38,7 +39,8 @@ const routes:Routes = [
     // We just import the above created routes here in 1st line using Router Module
     RouterModule.forRoot(routes),
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]
