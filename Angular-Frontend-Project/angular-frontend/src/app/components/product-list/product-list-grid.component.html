@@ -21,6 +21,28 @@
                     Please Try Again...No Products Found...
                 </div>
             </div>
+            <!-- Footer Pagination-->
+            <div class="footer-pagination">
+                <div class="row">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-9" style="padding-left: 30%">
+                                <!-- L.H.S contains Angular Components And R.H.S contains this Product list component -->
+                                <!-- [(page)] is two way Data binding -->
+                                <!-- [pageSize] is one way Data binding -->
+                                <!-- (pageChange) is Event binding -->
+                                <ngb-pagination [(page)]="thePageNumber"
+                                                [pageSize]="thePageSize"
+                                                [collectionSize]="theTotalElements"
+                                                (pageChange)="listProducts()"
+                                >
+                                </ngb-pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
