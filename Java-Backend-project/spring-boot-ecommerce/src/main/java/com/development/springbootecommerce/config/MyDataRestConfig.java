@@ -45,7 +45,9 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         exposeIds(config);
     }
 
-    // To expose all Entity Id's
+    /* To expose all Entity Id's, and we need this as by default springboot Data REST did not provide ID's here in json
+        response, though these ID's are available in Database
+    */
     private void exposeIds(RepositoryRestConfiguration config) {
         // Get a list of all Entity Classes using JPA Entity Manager
         Set<EntityType<?>> entities = entityManager.getMetamodel().getEntities();
