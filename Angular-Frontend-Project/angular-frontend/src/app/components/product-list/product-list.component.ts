@@ -18,7 +18,7 @@ export class ProductListComponent implements OnInit {
 
   // Adding properties to include Pagination
   thePageNumber: number = 1;
-  thePageSize: number = 10;
+  thePageSize: number = 5;
   theTotalElements: number = 0;
 
   //  here we would integrate this component with product service using dependency injection,
@@ -76,11 +76,11 @@ export class ProductListComponent implements OnInit {
         }
       )
 
-    this.productService.getProductList(this.currentCategoryId).subscribe(
-      data => {
-        this.products = data;
-      }
-    )
+    // this.productService.getProductList(this.currentCategoryId).subscribe(
+    //   data => {
+    //     this.products = data;
+    //   }
+    // )
   }
 
   handleSearchProducts() {
@@ -90,5 +90,11 @@ export class ProductListComponent implements OnInit {
         this.products = data;
       }
     );
+  }
+
+  updatePageSize(pageSize: string){
+    this.thePageNumber = 1;
+    this.thePageSize = +pageSize;
+    this.listProducts();
   }
 }
