@@ -20,6 +20,7 @@ export class ProductListComponent implements OnInit {
   thePageNumber: number = 1;
   thePageSize: number = 5;
   theTotalElements: number = 0;
+  thePreviousKeyword: string = "";
 
   //  here we would integrate this component with product service using dependency injection,
   constructor(private productService: ProductService,
@@ -66,16 +67,9 @@ export class ProductListComponent implements OnInit {
     // In Angular Index starts with 1, whereas in Java, it starts with 0,
     this.productService.getProductListPaginate(this.thePageNumber - 1,
       this.thePageSize,
-      this.currentCategoryId).subscribe(
-        data => {
-          // L.H.S belongs to Angular frontend and R.H.S belongs to Java backend,
-          this.products = data._embedded.products;
-          this.thePageNumber = data.page.number + 1;
-          this.thePageSize = data.page.size;
-          this.theTotalElements = data.page.totalElements;
-        }
-      )
+      this.currentCategoryId).subscribe(this.processResult());
 
+    // NOTE: This below method is the case, when we do not want pagination at all, after fetching product list from Spring data REST
     // this.productService.getProductList(this.currentCategoryId).subscribe(
     //   data => {
     //     this.products = data;
@@ -83,18 +77,37 @@ export class ProductListComponent implements OnInit {
     // )
   }
 
+  // This method searches products using user provided keyword
   handleSearchProducts() {
     const theKeyword: string = this.route.snapshot.paramMap.get('keyword')!;
-    this.productService.searchProducts(theKeyword).subscribe(
-      data => {
-        this.products = data;
-      }
-    );
+    if(this.thePreviousKeyword != theKeyword){
+      this.thePageNumber = 1;
+    }
+    this.thePreviousKeyword = theKeyword;
+    console.log(`keyword=${theKeyword}, pageNumber=${this.thePageNumber}`);
+    this.productService.searchProductsPaginate(this.thePageNumber - 1,
+      this.thePageSize,
+      theKeyword).subscribe(this.processResult());
   }
 
-  updatePageSize(pageSize: string){
+  updatePageSize(pageSize: string) {
     this.thePageNumber = 1;
     this.thePageSize = +pageSize;
     this.listProducts();
   }
+
+  processResult(){
+    return(data: any) => {
+      this.products = data._embedded.products;
+      this.thePageNumber = data.page.number + 1;
+      this.thePageSize = data.page.size;
+      this.theTotalElements = data.page.totalElements;
+    };
+  }
+
+  addToCart(product: Product){
+    console.log(`Adding To Cart: ${product.name}, ${product.unitPrice}`);
+  }
 }
+
+

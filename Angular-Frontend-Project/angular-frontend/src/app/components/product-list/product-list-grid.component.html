@@ -12,7 +12,8 @@
                             <h1>{{ product.name }}</h1>
                         </a>
                         <div class="price">{{ product.unitPrice | currency:'USD'}}</div>
-                        <a href="#" class="primary-btn" style="text-decoration: none;">Add to cart</a>
+                        <button (click)="addToCart(product)" class="btn btn-primary btn-sm"
+                            style="text-decoration: none;">Add to cart</button>
                     </div>
                 </div>
                 <!-- If no products are found after filter/search -->
@@ -32,15 +33,12 @@
                                 <!-- [(page)] is two way Data binding -->
                                 <!-- [pageSize] is one way Data binding -->
                                 <!-- (pageChange) is Event binding -->
-                                <ngb-pagination [(page)]="thePageNumber"
-                                                [pageSize]="thePageSize"
-                                                [collectionSize]="theTotalElements"
-                                                [maxSize]="5"
-                                                [boundaryLinks]="true"
-                                                (pageChange)="listProducts()"
-                                >
+                                <ngb-pagination [(page)]="thePageNumber" [pageSize]="thePageSize"
+                                    [collectionSize]="theTotalElements" [maxSize]="5" [boundaryLinks]="true"
+                                    (pageChange)="listProducts()">
                                 </ngb-pagination>
                             </div>
+                            <hr>
                             <div class="col-md-3 mt-2" style="text-align: right;">
                                 <span class="mr-2">Page Size </span>
                                 <select #myPageSelect (change)="updatePageSize(myPageSelect.value)">
