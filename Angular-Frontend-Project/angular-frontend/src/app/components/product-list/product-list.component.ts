@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CartItem } from 'src/app/common/cart-item';
 import { Product } from 'src/app/common/product';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -23,7 +25,7 @@ export class ProductListComponent implements OnInit {
   thePreviousKeyword: string = "";
 
   //  here we would integrate this component with product service using dependency injection,
-  constructor(private productService: ProductService,
+  constructor(private productService: ProductService, private cartService: CartService,
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -80,7 +82,7 @@ export class ProductListComponent implements OnInit {
   // This method searches products using user provided keyword
   handleSearchProducts() {
     const theKeyword: string = this.route.snapshot.paramMap.get('keyword')!;
-    if(this.thePreviousKeyword != theKeyword){
+    if (this.thePreviousKeyword != theKeyword) {
       this.thePageNumber = 1;
     }
     this.thePreviousKeyword = theKeyword;
@@ -96,8 +98,8 @@ export class ProductListComponent implements OnInit {
     this.listProducts();
   }
 
-  processResult(){
-    return(data: any) => {
+  processResult() {
+    return (data: any) => {
       this.products = data._embedded.products;
       this.thePageNumber = data.page.number + 1;
       this.thePageSize = data.page.size;
@@ -105,8 +107,10 @@ export class ProductListComponent implements OnInit {
     };
   }
 
-  addToCart(product: Product){
+  addToCart(product: Product) {
     console.log(`Adding To Cart: ${product.name}, ${product.unitPrice}`);
+    const theCartItem = new CartItem(product);
+    this.cartService.addToCart(theCartItem);
   }
 }
 

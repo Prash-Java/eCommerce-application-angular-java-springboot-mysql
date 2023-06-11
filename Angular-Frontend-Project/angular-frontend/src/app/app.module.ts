@@ -11,6 +11,7 @@ import { SearchComponent } from './components/search/search.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CartStatusComponent } from './components/cart-status/cart-status.component';
+import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 
 const routes:Routes = [
   // Angular by default adds '/' in path like '/category' and hence we do not need to add '/' explicitly,
@@ -18,6 +19,7 @@ const routes:Routes = [
   // If first three specific paths do not matches, then we give 4th one with redirectTo but only this will start path with '/' explicitly
   // If none of 1st four matches, then generic wildcard is used in 5th case below,
   // NOTE: Being single page application, only modified part of page gets updated, and not the entire page
+  { path: 'cart-details', component: CartDetailsComponent},
   { path: 'products/:id', component: ProductDetailsComponent},
   { path: 'search/:keyword', component: ProductListComponent},
   { path: 'category/:id/:name', component: ProductListComponent },
@@ -35,7 +37,8 @@ const routes:Routes = [
     ProductCategoryMenuComponent,
     SearchComponent,
     ProductDetailsComponent,
-    CartStatusComponent
+    CartStatusComponent,
+    CartDetailsComponent
   ],
   imports: [
     // We just import the above created routes here in 1st line using Router Module
