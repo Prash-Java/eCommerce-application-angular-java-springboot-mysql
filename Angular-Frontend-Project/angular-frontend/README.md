@@ -52,6 +52,17 @@ Steps done in sequence:
 --> ng add @angular/localize from the CLI
 --> npm install @ng-bootstrap/ng-bootstrap@13.0.0
 
+-> Angular Frameworks provides Forms out of box: there are basically two types of Angular Forms:
+--> Reactive Forms -> Desirable for big, large scale forms in large Enterprise solutions
+--> Template Driven Forms -> Desirable for smaller scale requirements
+
+
+-> More On Angular Frameworks: the following process is observed, whenever we take any module out of given project at large:
+--> Create desired component
+--> Mark Route in app.component.ts
+--> Provide RouterLink in desired html page document
+
+
 
 
 
