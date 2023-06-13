@@ -90,8 +90,8 @@
                 <!-- Add checkbox if Billing and Shipping Address Are Same -->
                 <div class="input-space">
                     <label class="au-checkbox">
-                        <input type="checkbox">
-                        <span class="au-checkmark" (change)="copyShippingAddressToBillingAddress($event)"></span>Billing
+                        <input type="checkbox" (change)="copyShippingAddressToBillingAddress($event)">
+                        <span class="au-checkmark"></span>Billing
                         address same as
                         shipping address
                     </label>
@@ -198,7 +198,9 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <select formControlName="expirationMonth">
-                                    <option style="background-color: lightblue;">TO BE DONE</option>
+                                    <option *ngFor="let month of creditCardMonths" style="background-color: lightblue;">
+                                        {{ month }}
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -208,8 +210,10 @@
                         <div class="col-md-2"><label style="color: blue;">Expiration Year</label></div>
                         <div class="col-md-9">
                             <div class="input-space">
-                                <select formControlName="expirationYear">
-                                    <option style="background-color: lightblue;">TO BE DONE</option>
+                                <select formControlName="expirationYear" (change)="handleMonthsAndYears()">
+                                    <option *ngFor="let year of creditCardYears" style="background-color: lightblue;">
+                                        {{ year }}
+                                    </option>
                                 </select>
                             </div>
                         </div>
