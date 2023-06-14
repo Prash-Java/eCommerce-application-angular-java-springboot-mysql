@@ -1,7 +1,9 @@
 package com.development.springbootecommerce.config;
 
+import com.development.springbootecommerce.entity.Country;
 import com.development.springbootecommerce.entity.Product;
 import com.development.springbootecommerce.entity.ProductCategory;
+import com.development.springbootecommerce.entity.State;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.metamodel.EntityType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,20 +31,27 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
         HttpMethod[] theUnsupportedActions = {HttpMethod.POST,HttpMethod.DELETE,HttpMethod.PUT};
-        //Disable for Product Entity: POST, DELETE, PUT Http Methods
-        config.getExposureConfiguration()
-                .forDomainType(Product.class)
-                .withItemExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions))
-                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions));
+        //Disable for Product Entity: POST, DELETE, PUT Http Methods on Entity.Product
+        disableHttpMethods(Product.class, config, theUnsupportedActions);
 
-        //Disable for Product Category Entity: POST, DELETE, PUT http methods
-        config.getExposureConfiguration()
-                .forDomainType(ProductCategory.class)
-                .withItemExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions))
-                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions));
+        //Disable for Product Category Entity: POST, DELETE, PUT http methods on Entity.ProductCategory
+        disableHttpMethods(ProductCategory.class, config, theUnsupportedActions);
+
+        //Disable for Product Category Entity: POST, DELETE, PUT http methods on Entity.Country
+        disableHttpMethods(Country.class, config, theUnsupportedActions);
+
+        //Disable for Product Category Entity: POST, DELETE, PUT http methods on Entity.State
+        disableHttpMethods(State.class, config, theUnsupportedActions);
 
         // call helper method to expose Entity Id's
         exposeIds(config);
+    }
+
+    private static void disableHttpMethods(Class theClass, RepositoryRestConfiguration config, HttpMethod[] theUnsupportedActions) {
+        config.getExposureConfiguration()
+                .forDomainType(theClass)
+                .withItemExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions))
+                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions));
     }
 
     /* To expose all Entity Id's, and we need this as by default springboot Data REST did not provide ID's here in json
