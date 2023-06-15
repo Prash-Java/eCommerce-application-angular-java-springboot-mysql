@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Country } from 'src/app/common/country';
+import { State } from 'src/app/common/state';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 
 @Component({
@@ -14,6 +16,10 @@ export class CheckoutComponent implements OnInit {
 
   creditCardYears: number[] = [];
   creditCardMonths: number[] = [];
+
+  countries: Country[] = [];
+  billingAddressStates: State[] = [];
+  shippingAddressStates: State[] = [];
 
   constructor(private formBuilder: FormBuilder, private utilitiesService: UtilitiesService) { }
 
@@ -60,6 +66,12 @@ export class CheckoutComponent implements OnInit {
         this.creditCardYears = data;
       }
     );
+
+    this.utilitiesService.getCountries().subscribe (
+      data => {
+        this.countries = data;
+      }
+    );
   }
 
   onSubmit(){
@@ -70,9 +82,11 @@ export class CheckoutComponent implements OnInit {
   copyShippingAddressToBillingAddress(event:any){
     if(event.target.checked){
       this.checkoutFormGroup.controls.billingAddress.setValue(this.checkoutFormGroup.controls.shippingAddress.value);
+      this.billingAddressStates = this.shippingAddressStates;
     }
     else {
       this.checkoutFormGroup.controls.billingAddress.reset();
+      this.billingAddressStates = [];
     }
   }
 
@@ -96,6 +110,23 @@ export class CheckoutComponent implements OnInit {
         this.creditCardMonths = data;
       }
     )
+  }
+
+  getStates(formGroupName: string){
+    const formGroup = this.checkoutFormGroup.get(formGroupName);
+    const countryCode = formGroup?.value.country.code;
+    const countryName = formGroup?.value.country.name;
+    this.utilitiesService.getStates(countryCode).subscribe(
+      data => {
+        if(formGroupName === 'shippingAddress'){
+          this.shippingAddressStates = data;
+        }
+        else {
+          this.billingAddressStates = data; 
+        }
+        formGroup!.get('state')!.setValue(data[0]);
+      }
+    );
   }
 
 }
