@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Country } from 'src/app/common/country';
 import { State } from 'src/app/common/state';
+import { CartService } from 'src/app/services/cart.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { CustomValidators } from 'src/app/validators/custom-validators';
 
@@ -22,9 +23,10 @@ export class CheckoutComponent implements OnInit {
   billingAddressStates: State[] = [];
   shippingAddressStates: State[] = [];
 
-  constructor(private formBuilder: FormBuilder, private utilitiesService: UtilitiesService) { }
+  constructor(private formBuilder: FormBuilder, private utilitiesService: UtilitiesService, private cartService: CartService) { }
 
   ngOnInit(): void {
+    this.reviewCartDetails();
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
         firstName: new FormControl('',[Validators.required, Validators.minLength(3), CustomValidators.notOnlyWhitespace]),
@@ -48,8 +50,8 @@ export class CheckoutComponent implements OnInit {
       creditCard: this.formBuilder.group({
         cardType: new FormControl('', [Validators.required]),
         nameOnCard: new FormControl('', [Validators.required, Validators.minLength(3), CustomValidators.notOnlyWhitespace]),
-        cardNumber: new FormControl('', [Validators.required, Validators.minLength(16), CustomValidators.notOnlyWhitespace]),
-        securityCode: new FormControl('', [Validators.required, Validators.minLength(4), CustomValidators.notOnlyWhitespace]),
+        cardNumber: new FormControl('', [Validators.required, Validators.pattern('[0-9]{16}'), CustomValidators.notOnlyWhitespace]),
+        securityCode: new FormControl('', [Validators.required, Validators.pattern('[0-9]{4}'), CustomValidators.notOnlyWhitespace]),
         expirationMonth: new FormControl('', [Validators.required]),
         expirationYear: new FormControl('', [Validators.required])
       })
@@ -72,6 +74,15 @@ export class CheckoutComponent implements OnInit {
       data => {
         this.countries = data;
       }
+    );
+  }
+  reviewCartDetails() {
+    this.cartService.totalQuantity.subscribe(
+      totalQuantity => this.totalQuantity = totalQuantity
+    );
+
+    this.cartService.totalPrice.subscribe(
+      totalPrice => this.totalPrice = totalPrice
     );
   }
 
