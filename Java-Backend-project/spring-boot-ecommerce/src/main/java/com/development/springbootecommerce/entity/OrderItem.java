@@ -1,13 +1,15 @@
 package com.development.springbootecommerce.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "order_item")
-@Data
+@Getter
+@Setter
 public class OrderItem {
 
     @Id
