@@ -17,6 +17,7 @@ public class CheckoutController {
         this.checkoutService = checkoutService;
     }
 
+    // http://localhost:8080/api/checkout/purchase
     @PostMapping("/purchase")
     public PurchaseResponse placeOrder(@RequestBody Purchase purchase){
         PurchaseResponse purchaseResponse = checkoutService.placeOrder(purchase);
