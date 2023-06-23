@@ -16,6 +16,23 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { LoginStatusComponent } from './components/login-status/login-status.component';
+import { from } from 'rxjs';
+
+import {
+  OktaAuthModule,
+  OktaCallbackComponent,
+  OKTA_CONFIG
+} from '@okta/okta-angular';
+
+import {
+  OktaAuth
+} from '@okta/okta-auth-js';
+
+import myAppConfig from './config/my-app-config';
+
+const oktaConfig = myAppConfig.oidc;
+const oktaAuth = new OktaAuth(oktaConfig);
+
 
 const routes:Routes = [
   // Angular by default adds '/' in path like '/category' and hence we do not need to add '/' explicitly,
@@ -23,6 +40,8 @@ const routes:Routes = [
   // If first three specific paths do not matches, then we give 4th one with redirectTo but only this will start path with '/' explicitly
   // If none of 1st four matches, then generic wildcard is used in 5th case below,
   // NOTE: Being single page application, only modified part of page gets updated, and not the entire page
+  { path: 'login/callback', component: OktaCallbackComponent},
+  { path: 'login', component: LoginComponent},
   { path: 'checkout', component: CheckoutComponent},
   { path: 'cart-details', component: CartDetailsComponent},
   { path: 'products/:id', component: ProductDetailsComponent},
@@ -54,9 +73,10 @@ const routes:Routes = [
     BrowserModule,
     HttpClientModule,
     NgbModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    OktaAuthModule
   ],
-  providers: [ProductService],
+  providers: [ProductService, { provide: OKTA_CONFIG, useValue: { oktaAuth }}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
