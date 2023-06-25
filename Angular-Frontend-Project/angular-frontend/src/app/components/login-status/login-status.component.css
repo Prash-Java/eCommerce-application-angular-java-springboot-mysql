@@ -1,21 +1,21 @@
 .security-btn {
     position:relative;
-    right:10px;
-    min-width:85px;
+    right:0;
+    min-width:95px;
     color:#fff;
     border:10px solid #205b8d;
     -webkit-border-radius:3px;
     -moz-border-radius:3px;
-    border-radius:0;
+    border-radius:43px;
     background:#205b8d
 }
 
 .login-status-header{
-    -webkit-box-pack:center;
-    -webkit-justify-content:center;
-    -moz-box-pack:center;
-    -ms-flex-pack:center;
-    justify-content:center
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
 }
 
 .login-status-user-info{
