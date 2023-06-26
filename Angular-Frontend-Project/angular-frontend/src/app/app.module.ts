@@ -35,31 +35,34 @@ import { MembersPageComponent } from './components/members-page/members-page.com
 const oktaConfig = myAppConfig.oidc;
 const oktaAuth = new OktaAuth(oktaConfig);
 
-function sendToLoginPage(oktaAuth: OktaAuth, injector: Injector){
+function sendToLoginPage(oktaAuth: OktaAuth, injector: Injector) {
   const router = injector.get(Router);
   router.navigate(['/login']);
 }
 
-const routes:Routes = [
+const routes: Routes = [
   // Angular by default adds '/' in path like '/category' and hence we do not need to add '/' explicitly,
   // Angular advices to add routes in specific to generic manner, coming from top to down approach here below, 1st, 2nd, 3rd paths being specific
   // If first three specific paths do not matches, then we give 4th one with redirectTo but only this will start path with '/' explicitly
   // If none of 1st four matches, then generic wildcard is used in 5th case below,
   // NOTE: Being single page application, only modified part of page gets updated, and not the entire page
-  { path: 'members', component: MembersPageComponent, canActivate: [OktaAuthGuard],
-                          data: { onAuthRequired: sendToLoginPage}},
-  { path: 'login/callback', component: OktaCallbackComponent},
-  { path: 'login', component: LoginComponent},
-  { path: 'checkout', component: CheckoutComponent},
-  { path: 'cart-details', component: CartDetailsComponent},
-  { path: 'products/:id', component: ProductDetailsComponent},
-  { path: 'search/:keyword', component: ProductListComponent},
+  // This first path is "ROTECTED ROUTES" provided by Angular Routes And together with Okta routes, it navigates to Members area if user is logged in, else it navigates into /login page
+  {
+    path: 'members', component: MembersPageComponent, canActivate: [OktaAuthGuard],
+    data: { onAuthRequired: sendToLoginPage }
+  },
+  { path: 'login/callback', component: OktaCallbackComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'checkout', component: CheckoutComponent },
+  { path: 'cart-details', component: CartDetailsComponent },
+  { path: 'products/:id', component: ProductDetailsComponent },
+  { path: 'search/:keyword', component: ProductListComponent },
   { path: 'category/:id/:name', component: ProductListComponent },
-  { path: 'category', component:ProductListComponent},
-  { path: 'products', component:ProductListComponent},
-  { path: '', redirectTo: '/products', pathMatch: 'full'},
-  { path: '**', redirectTo: '/products', pathMatch: 'full'}
-  
+  { path: 'category', component: ProductListComponent },
+  { path: 'products', component: ProductListComponent },
+  { path: '', redirectTo: '/products', pathMatch: 'full' },
+  { path: '**', redirectTo: '/products', pathMatch: 'full' }
+
 ];
 
 @NgModule({
@@ -85,7 +88,7 @@ const routes:Routes = [
     ReactiveFormsModule,
     OktaAuthModule
   ],
-  providers: [ProductService, { provide: OKTA_CONFIG, useValue: { oktaAuth }}],
+  providers: [ProductService, { provide: OKTA_CONFIG, useValue: { oktaAuth } }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
