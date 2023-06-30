@@ -7,6 +7,7 @@ import com.development.springbootecommerce.entity.State;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.metamodel.EntityType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.core.mapping.HttpMethods;
@@ -21,6 +22,9 @@ import java.util.Set;
 @Configuration
 public class MyDataRestConfig implements RepositoryRestConfigurer {
 
+    @Value("${allowed.origins}") // Injected from application.properties file
+    private String[] theAllowedOrigins;
+
     //Spring JPA Entity Manager to get Entity Id's which by default spring does not provide in json response, but it has Entity Id's
     private EntityManager entityManager;
 
@@ -30,7 +34,7 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
     }
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
-        HttpMethod[] theUnsupportedActions = {HttpMethod.POST,HttpMethod.DELETE,HttpMethod.PUT};
+        HttpMethod[] theUnsupportedActions = {HttpMethod.POST, HttpMethod.DELETE, HttpMethod.PUT, HttpMethod.PATCH};
         //Disable for Product Entity: POST, DELETE, PUT Http Methods on Entity.Product
         disableHttpMethods(Product.class, config, theUnsupportedActions);
 
@@ -45,6 +49,9 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
 
         // call helper method to expose Entity Id's
         exposeIds(config);
+
+        // configure CORS for request source mapping => and now we can remove Annotation @CrossOrigins from DAO package/Interfaces
+        cors.addMapping(config.getBasePath() + "/**").allowedOrigins(theAllowedOrigins);
     }
 
     private static void disableHttpMethods(Class theClass, RepositoryRestConfiguration config, HttpMethod[] theUnsupportedActions) {

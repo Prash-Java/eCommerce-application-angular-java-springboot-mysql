@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
-@CrossOrigin("http://localhost:4200")
-@RepositoryRestResource
+@RepositoryRestResource(exported = true)
 public interface StateRepository extends JpaRepository<State, Integer> {
     List<State> findByCountryCode(@Param("code") String code);
     // The above method exposes this REST URL:- http://localhost:8080/api/states/search/findByCountryCode?code=IN

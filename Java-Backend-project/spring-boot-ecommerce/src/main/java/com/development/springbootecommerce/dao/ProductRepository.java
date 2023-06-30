@@ -5,9 +5,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-@CrossOrigin("http://localhost:4200") // origin = protocol + hostname + portNumber;
+@RepositoryRestResource(exported = true)
 public interface ProductRepository extends JpaRepository<Product, Long> {
     // Any method name starts with "findBy" is classified as query method by Spring frameworks and it implements the query in background
     Page<Product> findByCategoryId(@Param("id") Long id, Pageable pageable);
