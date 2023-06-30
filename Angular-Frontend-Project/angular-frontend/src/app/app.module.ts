@@ -31,6 +31,7 @@ import {
 
 import myAppConfig from './config/my-app-config';
 import { MembersPageComponent } from './components/members-page/members-page.component';
+import { OrderHistoryComponent } from './components/order-history/order-history.component';
 
 const oktaConfig = myAppConfig.oidc;
 const oktaAuth = new OktaAuth(oktaConfig);
@@ -47,6 +48,10 @@ const routes: Routes = [
   // If none of 1st four matches, then generic wildcard is used in 5th case below,
   // NOTE: Being single page application, only modified part of page gets updated, and not the entire page
   // This first path is "ROTECTED ROUTES" provided by Angular Routes And together with Okta routes, it navigates to Members area if user is logged in, else it navigates into /login page
+  {
+    path: 'order-history', component: OrderHistoryComponent, canActivate: [OktaAuthGuard],
+    data: { onAuthRequired: sendToLoginPage }
+  },
   {
     path: 'members', component: MembersPageComponent, canActivate: [OktaAuthGuard],
     data: { onAuthRequired: sendToLoginPage }
@@ -77,7 +82,8 @@ const routes: Routes = [
     CheckoutComponent,
     LoginComponent,
     LoginStatusComponent,
-    MembersPageComponent
+    MembersPageComponent,
+    OrderHistoryComponent
   ],
   imports: [
     // We just import the above created routes here in 1st line using Router Module

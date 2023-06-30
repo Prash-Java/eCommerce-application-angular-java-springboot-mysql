@@ -1,9 +1,6 @@
 package com.development.springbootecommerce.config;
 
-import com.development.springbootecommerce.entity.Country;
-import com.development.springbootecommerce.entity.Product;
-import com.development.springbootecommerce.entity.ProductCategory;
-import com.development.springbootecommerce.entity.State;
+import com.development.springbootecommerce.entity.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.metamodel.EntityType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +38,14 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         //Disable for Product Category Entity: POST, DELETE, PUT http methods on Entity.ProductCategory
         disableHttpMethods(ProductCategory.class, config, theUnsupportedActions);
 
-        //Disable for Product Category Entity: POST, DELETE, PUT http methods on Entity.Country
+        //Disable for Country Entity: POST, DELETE, PUT http methods on Entity.Country
         disableHttpMethods(Country.class, config, theUnsupportedActions);
 
-        //Disable for Product Category Entity: POST, DELETE, PUT http methods on Entity.State
+        //Disable for State Entity: POST, DELETE, PUT http methods on Entity.State
         disableHttpMethods(State.class, config, theUnsupportedActions);
+
+        //Disable for Order Entity: POST, DELETE, PUT http methods on Entity.State
+        disableHttpMethods(Order.class, config, theUnsupportedActions);
 
         // call helper method to expose Entity Id's
         exposeIds(config);
