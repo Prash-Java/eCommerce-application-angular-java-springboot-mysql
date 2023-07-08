@@ -7,4 +7,4 @@ export default {
     }
 }
 
-// In App, the username and password would be as "username":"prashantkumar_choud@hcl.com" and "password":"Angular_Java_01"
+// In Application, the username and password would be as "username":"prashantkumar_choud@hcl.com" and "password":"Angular_Java_01"
