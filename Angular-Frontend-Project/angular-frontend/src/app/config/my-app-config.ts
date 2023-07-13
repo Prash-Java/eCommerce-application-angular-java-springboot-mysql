@@ -8,4 +8,5 @@ export default {
 }
 
 // In Application, the username and password would be as "username":"prashantkumar_choud@hcl.com" and "password":"Angular_Java_02"
-// dev-57748971 => 
+// dev-57748971 =>
+// In Stripe, "username" => "prash.sastra5@gmail.com" and "password" => "Angular_Java_02" 
